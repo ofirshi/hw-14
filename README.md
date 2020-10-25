@@ -1,5 +1,5 @@
 # hw-14
- 
+
 Preparations:
 	apt-get install -y sshpass
 	cp /etc/ssh/sshd_config{,_orig}
@@ -23,8 +23,8 @@ Preparations:
 	systemctl restart sshd
 
 Ansible :
-	echo "localhost ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass=screen" >> /etc/ansible/hosts
-	cat <<EOF > roles/common/tasks/main.yml
+echo "localhost ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass=screen" >> /etc/ansible/hosts
+cat <<EOF > roles/common/tasks/main.yml
 	---
 	- name: Install packges
 	  package:
@@ -74,4 +74,5 @@ EOF
 		  roles:
 			- challenge
 		EOF
-	ansible-playbook challenge.yml
+
+ansible-playbook challenge.yml
