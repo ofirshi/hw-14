@@ -43,3 +43,35 @@ Ansible :
 
 Remove:
 	ansible servers -m package -a "name=vim,zip state=absent"
+	
+	
+challenge:
+	mkdir -p roles/challenge/files
+	mkdir -p roles/challenge/handlers
+	mkdir -p roles/challenge/tasks
+
+cat <<EOF > roles/challenge/files/hostname.j2
+This servers hostname is: {{ansible_hostname}}
+EOF
+cat <<EOF > roles/challenge/files/test1
+Hello world!
+EOF
+cat <<EOF > roles/challenge/tasks/main.yml
+---
+- name: Template a file to another place
+  template:
+    src: ./roles/challenge/files/hostname.j2
+    dest: /tmp/test2
+- name: text a file to another place
+  template:
+    src: ./roles/challenge/files/test1
+    dest: /tmp/test1
+EOF
+		cat <<EOF > ./challenge.yml
+		---
+		- hosts: localhost
+		  serial: 1
+		  roles:
+			- challenge
+		EOF
+	ansible-playbook challenge.yml
